@@ -1,0 +1,448 @@
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Filo Barbería</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=DM+Serif+Display:ital@1&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: oscuro de taller, banda de poste giratorio, hero tipográfico, carta de servicios tipo pizarra, reserva que termina en WhatsApp */
+:root{
+  --bg:#141210; --surface:#1d1a17; --line:#35302a; --fg:#efe7dc; --muted:#a69a8b;
+  --brass:#d99a3d; --brass-ink:#1a1206; --oxblood:#8e2f25;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --serif:"DM Serif Display",Georgia,serif;
+  --body:"Work Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;line-height:.92;margin:0;text-wrap:balance;letter-spacing:.01em}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--brass);color:var(--brass-ink);font-weight:600;text-decoration:none;padding:14px 22px;border-radius:2px;border:0;font:600 15px var(--body);cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{background:#e8ab4d;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--brass)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+/* poste */
+.pole{height:10px;background:repeating-linear-gradient(-45deg,var(--oxblood) 0 14px,var(--fg) 14px 28px,#2c4a6e 28px 42px,var(--fg) 42px 56px);background-size:79px 10px;animation:pole 3s linear infinite}
+@keyframes pole{to{background-position:79px 0}}
+
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(20,18,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font-family:var(--display);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
+.logo em{font-family:var(--serif);text-transform:none;color:var(--brass);font-weight:400;font-size:22px;letter-spacing:0}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:14px}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--fg)}
+.nav .btn{padding:10px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 90% at 85% 20%,rgba(217,154,61,.16),transparent 60%);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:end;padding-block:72px 64px;position:relative;z-index:1}
+.hero h1{font-size:clamp(64px,11vw,148px);font-weight:900}
+.hero h1 .serif{display:block;font-family:var(--serif);text-transform:none;font-weight:400;color:var(--brass);font-size:.52em;line-height:1.1;letter-spacing:0;margin-top:.12em}
+.hero p.lead{max-width:44ch;color:var(--muted);font-size:18px;margin:24px 0 32px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.ticket{background:var(--surface);border:1px solid var(--line);padding:24px;position:relative}
+.ticket::before,.ticket::after{content:"";position:absolute;left:-9px;top:50%;width:18px;height:18px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+.ticket::after{left:auto;right:-9px}
+.ticket h3{font-size:22px;margin-bottom:14px}
+.ticket dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:14px}
+.ticket dt{color:var(--muted)} .ticket dd{margin:0;text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ticket .today{color:var(--brass)}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13px;color:var(--muted)}
+.status i{width:8px;height:8px;border-radius:50%;background:#5fae6e;box-shadow:0 0 0 4px rgba(95,174,110,.18)}
+.status.closed i{background:var(--oxblood);box-shadow:0 0 0 4px rgba(142,47,37,.25)}
+
+section{padding-block:88px;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.sec-head h2{font-size:clamp(44px,6vw,76px);font-weight:800}
+.sec-head p{max-width:42ch;color:var(--muted);margin:0}
+
+/* servicios: carta */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.item{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:22px 0;border-bottom:1px dashed var(--line)}
+.item h3{font-size:28px;font-weight:800}
+.item .price{font-family:var(--mono);font-size:20px;color:var(--brass);font-variant-numeric:tabular-nums;align-self:end}
+.item p{grid-column:1/-1;margin:0;color:var(--muted);font-size:15px;max-width:52ch}
+.item .dur{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--fg);opacity:.7}
+
+/* guía de degradé */
+.guide{background:var(--surface)}
+.guards{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--line)}
+.guard{padding:22px 16px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:14px;min-width:0}
+.guard:last-child{border-right:0}
+.guard .n{font-family:var(--display);font-weight:900;font-size:52px;line-height:1}
+.guard .n small{font-size:20px;color:var(--muted)}
+.guard .bar{height:120px;display:flex;align-items:flex-end;border-bottom:1px solid var(--line)}
+.guard .bar span{display:block;width:100%;background:repeating-linear-gradient(90deg,var(--fg) 0 2px,transparent 2px 5px);opacity:.85}
+.guard .mm{font-family:var(--mono);font-size:13px;color:var(--brass)}
+.guard .use{font-size:13px;color:var(--muted);line-height:1.45}
+
+/* equipo */
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.barber{border-top:2px solid var(--brass);padding-top:20px}
+.portrait{aspect-ratio:4/5;max-width:100%;background:
+  radial-gradient(circle at 50% 38%,#3a332b 0 22%,transparent 23%),
+  radial-gradient(ellipse 48% 34% at 50% 100%,#3a332b 0 98%,transparent 100%),
+  linear-gradient(160deg,#26211c,#171411);display:grid;place-items:end start;padding:16px;margin-bottom:18px;position:relative;overflow:hidden}
+.portrait b{font-family:var(--display);font-size:64px;font-weight:900;color:var(--brass);opacity:.9;line-height:.8}
+.barber h3{font-size:32px}
+.barber .role{font-family:var(--serif);font-style:italic;color:var(--brass);font-size:19px}
+.barber p{color:var(--muted);font-size:15px;margin:8px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tags span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);padding:4px 8px;color:var(--fg)}
+
+/* galería */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:10px}
+.shot{position:relative;overflow:hidden;background:#221e1a;display:flex;align-items:flex-end;padding:14px}
+.shot:nth-child(1){grid-column:span 2;grid-row:span 2}
+.shot:nth-child(4){grid-row:span 2}
+.shot::before{content:"";position:absolute;inset:0;background:var(--g);transition:transform .5s}
+.shot:hover::before{transform:scale(1.05)}
+.shot span{position:relative;font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:22px;letter-spacing:.02em}
+.shot small{position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* reserva */
+.book .wrap{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+.steps{display:flex;flex-direction:column;gap:30px;min-width:0}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+legend{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:22px;margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+legend b{font-family:var(--mono);font-size:12px;color:var(--brass);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip label{display:flex;flex-direction:column;gap:2px;cursor:pointer;padding:10px 14px;border:1px solid var(--line);background:var(--surface);font-size:14px;min-width:84px;transition:border-color .15s,background .15s}
+.chip label small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip input:checked+label{border-color:var(--brass);background:rgba(217,154,61,.12)}
+.chip input:focus-visible+label{outline:2px solid var(--brass);outline-offset:2px}
+.chip input:disabled+label{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.field{display:flex;flex-direction:column;gap:6px;max-width:360px}
+.field label{font-size:13px;color:var(--muted)}
+.field input{background:var(--surface);border:1px solid var(--line);color:var(--fg);padding:12px 14px;font:inherit;border-radius:2px}
+.summary{background:var(--surface);border:1px solid var(--line);padding:26px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px)}
+.summary h3{font-size:26px;margin-bottom:16px}
+.summary dl{margin:0 0 20px;display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:14px}
+.summary dt{color:var(--muted)} .summary dd{margin:0;text-align:right}
+.summary .total{border-top:1px dashed var(--line);padding-top:12px;font-family:var(--mono);font-size:20px;color:var(--brass)}
+.summary .btn{width:100%;justify-content:center}
+.summary .note{font-size:12px;color:var(--muted);margin:12px 0 0}
+.msg{display:none;margin-top:14px;font-size:13px;background:var(--bg);border:1px solid var(--line);padding:12px;white-space:pre-wrap;font-family:var(--mono);color:var(--fg)}
+.msg.show{display:block}
+
+/* visitanos */
+.visit .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.hours{width:100%;border-collapse:collapse;font-size:15px}
+.hours td{padding:12px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.hours tr.is-today td{color:var(--brass)}
+.addr{font-family:var(--serif);font-style:italic;font-size:30px;line-height:1.2;margin:10px 0 18px}
+.contact{display:flex;flex-direction:column;gap:10px;color:var(--muted)}
+.contact b{color:var(--fg);font-weight:500}
+footer{padding-block:36px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .hero .wrap,.book .wrap,.visit .wrap{grid-template-columns:1fr}
+  .menu{grid-template-columns:1fr}
+  .team{grid-template-columns:1fr 1fr}
+  .guards{grid-template-columns:repeat(3,1fr)}
+  .guard:nth-child(3){border-right:0}
+  .guard:nth-child(-n+3){border-bottom:1px solid var(--line)}
+  .gallery{grid-template-columns:1fr 1fr;grid-auto-rows:160px}
+  .shot:nth-child(4){grid-row:span 1}
+  .summary{position:static}
+}
+@media (max-width:560px){
+  .team{grid-template-columns:1fr}
+  .guards{grid-template-columns:1fr 1fr}
+  .guard{border-right:1px solid var(--line)!important;border-bottom:1px solid var(--line)}
+  .guard:nth-child(even){border-right:0!important}
+  .guard .bar{height:80px}
+  section{padding-block:64px}
+  .hero .wrap{padding-block:48px}
+  .logo{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){.pole{animation:none}*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<div class="pole" aria-hidden="true"></div>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Filo <em>barbería</em></a>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#degrade">Degradé</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#trabajos">Trabajos</a></li>
+      <li><a href="#visitanos">Visitanos</a></li>
+    </ul>
+    <a class="btn" href="#reservar">Reservar turno</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Caballito · Buenos Aires · desde 2016</p>
+        <h1>Corte limpio,<span class="serif">sin apuro y a navaja.</span></h1>
+        <p class="lead">Degradés a medida, barbas perfiladas con toalla caliente y un sillón que se reserva en dos minutos. Elegís barbero, día y hora; te confirmamos por WhatsApp.</p>
+        <div class="ctas">
+          <a class="btn" href="#reservar">Reservar turno →</a>
+          <a class="btn ghost" href="#servicios">Ver precios</a>
+        </div>
+      </div>
+      <aside class="ticket" aria-label="Horario de hoy">
+        <h3>Hoy en el local</h3>
+        <dl>
+          <dt>Día</dt><dd class="today" id="todayName">—</dd>
+          <dt>Horario</dt><dd id="todayHours">—</dd>
+          <dt>Sillones</dt><dd>3</dd>
+          <dt>Corte desde</dt><dd>$12.000</dd>
+        </dl>
+        <span class="status" id="openStatus"><i></i><span>—</span></span>
+      </aside>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Servicios</h2>
+        <p>Todos los servicios incluyen lavado, asesoramiento y terminación con producto. Precios en pesos, efectivo o transferencia.</p>
+      </div>
+      <div class="menu" id="menu"></div>
+    </div>
+  </section>
+
+  <section id="degrade" class="guide">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Guía rápida</p>
+          <h2>¿Qué número<br>te pedís?</h2>
+        </div>
+        <p>El número es el peine de la máquina: indica cuánto pelo queda. Si no sabés cuál pedir, mostranos una foto y lo definimos juntos.</p>
+      </div>
+      <div class="guards">
+        <div class="guard"><div class="n">#0</div><div class="bar"><span style="height:4%"></span></div><div class="mm">0,5 mm</div><div class="use">Base del degradé, piel casi a la vista.</div></div>
+        <div class="guard"><div class="n">#½</div><div class="bar"><span style="height:10%"></span></div><div class="mm">1,5 mm</div><div class="use">Transición baja en el low fade.</div></div>
+        <div class="guard"><div class="n">#1</div><div class="bar"><span style="height:20%"></span></div><div class="mm">3 mm</div><div class="use">Costados muy cortos, barba al ras.</div></div>
+        <div class="guard"><div class="n">#2</div><div class="bar"><span style="height:40%"></span></div><div class="mm">6 mm</div><div class="use">El clásico de costados prolijos.</div></div>
+        <div class="guard"><div class="n">#3</div><div class="bar"><span style="height:60%"></span></div><div class="mm">10 mm</div><div class="use">Corto parejo, sin que se note el cuero.</div></div>
+        <div class="guard"><div class="n">#4</div><div class="bar"><span style="height:85%"></span></div><div class="mm">13 mm</div><div class="use">Arriba con volumen o buzz cut largo.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="equipo">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>El equipo</h2>
+        <p>Tres barberos, tres manos distintas. Podés elegir con quién atenderte o dejar que te asignemos el primer turno libre.</p>
+      </div>
+      <div class="team">
+        <article class="barber">
+          <div class="portrait"><b>NR</b></div>
+          <h3>Nico Ruiz</h3>
+          <div class="role">Fundador · degradés</div>
+          <p>Diez años de oficio. El que va cuando querés un skin fade sin escalones.</p>
+          <div class="tags"><span>Skin fade</span><span>Diseños</span></div>
+        </article>
+        <article class="barber">
+          <div class="portrait"><b>MB</b></div>
+          <h3>Mati Benítez</h3>
+          <div class="role">Barbas y navaja</div>
+          <p>Perfilado de barba, afeitado clásico con toalla caliente y aceites.</p>
+          <div class="tags"><span>Navaja</span><span>Barba</span></div>
+        </article>
+        <article class="barber">
+          <div class="portrait"><b>LG</b></div>
+          <h3>Lu Gómez</h3>
+          <div class="role">Tijera y pelo largo</div>
+          <p>Cortes a tijera, texturizados y pelo largo con forma. También atiende chicos.</p>
+          <div class="tags"><span>Tijera</span><span>Texturas</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="trabajos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Trabajos</h2>
+        <p>Algunos cortes recientes del local. Más en Instagram.</p>
+      </div>
+      <div class="gallery">
+        <div class="shot" style="--g:linear-gradient(200deg,rgba(217,154,61,.35),transparent 55%),repeating-linear-gradient(0deg,#2a241e 0 3px,#221d18 3px 6px)"><small>01</small><span>Skin fade + diseño</span></div>
+        <div class="shot" style="--g:radial-gradient(circle at 30% 30%,#3b322a,#1a1714 70%)"><small>02</small><span>Crop texturizado</span></div>
+        <div class="shot" style="--g:linear-gradient(135deg,#4a2420,#1a1513 70%)"><small>03</small><span>Barba perfilada</span></div>
+        <div class="shot" style="--g:linear-gradient(0deg,#151210,#2f3a46 120%)"><small>04</small><span>Pompadour</span></div>
+        <div class="shot" style="--g:radial-gradient(circle at 70% 20%,rgba(217,154,61,.3),#1b1815 60%)"><small>05</small><span>Buzz cut #2</span></div>
+        <div class="shot" style="--g:repeating-linear-gradient(-45deg,#231e1a 0 10px,#1c1815 10px 20px)"><small>06</small><span>Afeitado navaja</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reservar" class="book">
+    <div class="wrap">
+      <form class="steps" id="bookForm" novalidate>
+        <div class="sec-head" style="margin-bottom:0">
+          <h2>Reservá<br>tu turno</h2>
+        </div>
+        <fieldset><legend><b>1</b> Servicio</legend><div class="chips" id="svcChips"></div></fieldset>
+        <fieldset><legend><b>2</b> Barbero</legend><div class="chips" id="barberChips"></div></fieldset>
+        <fieldset><legend><b>3</b> Día</legend><div class="chips" id="dayChips"></div></fieldset>
+        <fieldset><legend><b>4</b> Hora</legend><div class="chips" id="timeChips"></div></fieldset>
+        <fieldset><legend><b>5</b> Tus datos</legend>
+          <div class="field"><label for="name">Nombre</label><input id="name" autocomplete="given-name" placeholder="¿Cómo te llamás?"></div>
+        </fieldset>
+      </form>
+      <aside class="summary" aria-live="polite">
+        <h3>Tu turno</h3>
+        <dl>
+          <dt>Servicio</dt><dd id="sSvc">—</dd>
+          <dt>Barbero</dt><dd id="sBarber">—</dd>
+          <dt>Día</dt><dd id="sDay">—</dd>
+          <dt>Hora</dt><dd id="sTime">—</dd>
+          <dt>Duración</dt><dd id="sDur">—</dd>
+          <dt class="total">Total</dt><dd class="total" id="sTotal">—</dd>
+        </dl>
+        <a class="btn" id="waBtn" href="#" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+        <p class="note" id="waNote">Te abre WhatsApp con el mensaje listo. Si no se abre, copiá el texto y mandalo al 11 0000-0000.</p>
+        <div class="msg" id="msgBox"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="visitanos" class="visit">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Visitanos</p>
+        <p class="addr">Av. Pedro Goyena 1180,<br>Caballito, CABA</p>
+        <div class="contact">
+          <span>WhatsApp <b>11 0000-0000</b></span>
+          <span>Instagram <b>@filo.barberia</b></span>
+          <span>A dos cuadras del subte E, estación Emilio Mitre.</span>
+        </div>
+        <p style="margin-top:24px"><a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=Av.+Pedro+Goyena+1180+Caballito" target="_blank" rel="noopener">Cómo llegar ↗</a></p>
+      </div>
+      <table class="hours" id="hours" aria-label="Horarios"></table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Filo Barbería</span>
+    <span>Sitio de muestra · datos ficticios</span>
+  </div>
+</footer>
+
+<script>
+const SERVICES=[
+  {id:"corte",name:"Corte",price:12000,min:40,desc:"Máquina y tijera, con lavado y peinado final."},
+  {id:"fade",name:"Degradé",price:14000,min:45,desc:"Low, mid o skin fade con transición pareja y terminación a navaja."},
+  {id:"combo",name:"Corte + barba",price:17000,min:60,desc:"El combo completo: corte a elección y perfilado de barba."},
+  {id:"barba",name:"Barba",price:8000,min:25,desc:"Rebaje, perfilado con navaja y aceite hidratante."},
+  {id:"navaja",name:"Afeitado clásico",price:10000,min:35,desc:"Toalla caliente, espuma a brocha y navaja. Sin apuro."},
+  {id:"kids",name:"Corte niños",price:9000,min:30,desc:"Hasta 12 años. Paciencia incluida."}
+];
+const BARBERS=[{id:"any",name:"Cualquiera",sub:"primer libre"},{id:"nico",name:"Nico",sub:"degradés"},{id:"mati",name:"Mati",sub:"barbas"},{id:"lu",name:"Lu",sub:"tijera"}];
+// 0=Dom
+const HOURS={0:null,1:[14,20],2:[10,20],3:[10,20],4:[10,21],5:[10,21],6:[9,18]};
+const DAYS=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+const MONTHS=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const WA="5491100000000";
+const fmt=n=>"$"+n.toLocaleString("es-AR");
+const hh=h=>String(h).padStart(2,"0")+":00";
+
+// menú
+document.getElementById("menu").innerHTML=SERVICES.map(s=>`<div class="item"><h3>${s.name}</h3><span class="price">${fmt(s.price)}</span><p>${s.desc} <span class="dur">· ${s.min} MIN</span></p></div>`).join("");
+
+// horarios
+const now=new Date();
+const order=[1,2,3,4,5,6,0];
+document.getElementById("hours").innerHTML=order.map(d=>`<tr class="${d===now.getDay()?"is-today":""}"><td>${DAYS[d]}</td><td>${HOURS[d]?hh(HOURS[d][0])+" – "+hh(HOURS[d][1]):"Cerrado"}</td></tr>`).join("");
+const th=HOURS[now.getDay()];
+document.getElementById("todayName").textContent=DAYS[now.getDay()];
+document.getElementById("todayHours").textContent=th?hh(th[0])+" – "+hh(th[1]):"Cerrado";
+const isOpen=th&&now.getHours()>=th[0]&&now.getHours()<th[1];
+const st=document.getElementById("openStatus");
+st.classList.toggle("closed",!isOpen);
+st.querySelector("span").textContent=isOpen?"Abierto ahora":"Cerrado ahora · reservá para otro día";
+
+// reserva
+const state={svc:"combo",barber:"any",day:null,time:null};
+function chip(group,val,label,sub,checked,disabled){
+  const id=group+"-"+val;
+  return `<div class="chip"><input type="radio" name="${group}" id="${id}" value="${val}" ${checked?"checked":""} ${disabled?"disabled":""}><label for="${id}">${label}${sub?`<small>${sub}</small>`:""}</label></div>`;
+}
+document.getElementById("svcChips").innerHTML=SERVICES.map(s=>chip("svc",s.id,s.name,fmt(s.price),s.id===state.svc)).join("");
+document.getElementById("barberChips").innerHTML=BARBERS.map(b=>chip("barber",b.id,b.name,b.sub,b.id===state.barber)).join("");
+
+const days=[];
+for(let i=0;days.length<7&&i<10;i++){const d=new Date(now);d.setDate(now.getDate()+i);if(HOURS[d.getDay()])days.push(d)}
+function dayKey(d){return d.toISOString().slice(0,10)}
+state.day=dayKey(days[0]);
+document.getElementById("dayChips").innerHTML=days.map((d,i)=>chip("day",dayKey(d),i===0&&d.getDate()===now.getDate()?"Hoy":DAYS[d.getDay()].slice(0,3),d.getDate()+" "+MONTHS[d.getMonth()],i===0)).join("");
+
+// turnos ocupados de ejemplo, estables por día+barbero
+function busy(key,barber,h){let s=0;for(const c of key+barber)s=(s*31+c.charCodeAt(0))%997;return (s+h*7)%5===0}
+function renderTimes(){
+  const d=days.find(x=>dayKey(x)===state.day);const [a,b]=HOURS[d.getDay()];
+  const isToday=dayKey(d)===dayKey(now);
+  let html="",first=null;
+  for(let h=a;h<b;h++)for(const m of [0,30]){
+    const t=String(h).padStart(2,"0")+":"+(m?"30":"00");
+    const past=isToday&&(h<now.getHours()||(h===now.getHours()&&m<=now.getMinutes()));
+    const dis=past||busy(state.day,state.barber,h*2+m/30);
+    if(!dis&&!first)first=t;
+    html+=chip("time",t,t,"",false,dis);
+  }
+  const el=document.getElementById("timeChips");
+  el.innerHTML=html;
+  if(!state.time||el.querySelector(`input[value="${state.time}"]:disabled`)||!el.querySelector(`input[value="${state.time}"]`))state.time=first;
+  const sel=state.time&&el.querySelector(`input[value="${state.time}"]`); if(sel)sel.checked=true;
+}
+function update(){
+  const s=SERVICES.find(x=>x.id===state.svc),b=BARBERS.find(x=>x.id===state.barber),d=days.find(x=>dayKey(x)===state.day);
+  const dayTxt=DAYS[d.getDay()]+" "+d.getDate()+" "+MONTHS[d.getMonth()];
+  document.getElementById("sSvc").textContent=s.name;
+  document.getElementById("sBarber").textContent=b.name;
+  document.getElementById("sDay").textContent=dayTxt;
+  document.getElementById("sTime").textContent=state.time||"Sin turnos libres";
+  document.getElementById("sDur").textContent=s.min+" min";
+  document.getElementById("sTotal").textContent=fmt(s.price);
+  const name=document.getElementById("name").value.trim();
+  const text=`Hola Filo! ${name?"Soy "+name+". ":""}Quiero reservar ${s.name} (${fmt(s.price)}) con ${b.id==="any"?"cualquier barbero":b.name} el ${dayTxt} a las ${state.time||"—"}. ¿Me confirman?`;
+  const btn=document.getElementById("waBtn");
+  btn.href="https://wa.me/"+WA+"?text="+encodeURIComponent(text);
+  btn.dataset.text=text;
+  const box=document.getElementById("msgBox");
+  if(box.classList.contains("show"))box.textContent=text;
+}
+document.getElementById("bookForm").addEventListener("change",e=>{
+  const {name,value}=e.target;
+  if(name in state){state[name]=value; if(name==="day"||name==="barber")renderTimes();}
+  update();
+});
+document.getElementById("name").addEventListener("input",update);
+document.getElementById("bookForm").addEventListener("submit",e=>e.preventDefault());
+document.getElementById("waBtn").addEventListener("click",function(){
+  const box=document.getElementById("msgBox");
+  box.textContent=this.dataset.text; box.classList.add("show");
+  try{navigator.clipboard.writeText(this.dataset.text).then(()=>{document.getElementById("waNote").textContent="Mensaje copiado. Si WhatsApp no se abrió, pegalo en un chat al 11 0000-0000."}).catch(()=>{})}catch(_){}
+});
+renderTimes();update();
+</script>
+
+</body></html>

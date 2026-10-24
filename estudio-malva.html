@@ -1,0 +1,255 @@
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Turnos Estudio Malva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap">
+<style>
+/* Layout: una columna estrecha tipo libreta de turnos; pasos apilados, resumen fijo abajo */
+:root{
+  --bg:#f6f2f5; --surface:#ffffff; --ink:#2a1f2b; --muted:#76687a; --line:#e4dbe3;
+  --accent:#8a3f7a; --accent-soft:#f1e3ee; --on-accent:#ffffff; --ok:#2f7a55;
+  --f-display:"Young Serif", Georgia, serif;
+  --f-body:"Bricolage Grotesque", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1b1520; --surface:#251d2a; --ink:#f1e8f0; --muted:#a898a8; --line:#3a2f40;
+  --accent:#d68bc4; --accent-soft:#3b2638; --on-accent:#1b1520; --ok:#6fcf9b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b1520; --surface:#251d2a; --ink:#f1e8f0; --muted:#a898a8; --line:#3a2f40;
+  --accent:#d68bc4; --accent-soft:#3b2638; --on-accent:#1b1520; --ok:#6fcf9b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;padding:0 16px}
+.wrap{max-width:560px;margin:0 auto;padding-block:28px 140px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(30px,8vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.lead{color:var(--muted);margin:0}
+.note{font-size:13px;background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:10px 12px}
+section{display:flex;flex-direction:column;gap:12px}
+h2{font-family:var(--f-display);font-weight:400;font-size:21px;margin:0;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-family:var(--f-body);font-size:13px;color:var(--accent);font-weight:700}
+.services{display:grid;gap:8px}
+.svc{display:grid;grid-template-columns:1fr auto;gap:2px 12px;text-align:left;width:100%;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:14px;font:inherit;cursor:pointer}
+.svc .name{font-weight:500}
+.svc .meta{font-size:13px;color:var(--muted)}
+.svc .price{grid-row:1/3;grid-column:2;align-self:center;font-variant-numeric:tabular-nums;font-weight:500}
+.svc[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:var(--accent-soft)}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.day{flex:0 0 auto;width:62px;display:flex;flex-direction:column;align-items:center;gap:0;padding:10px 0;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.day .dw{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.day .dn{font-family:var(--f-display);font-size:22px;line-height:1.2}
+.day .dm{font-size:12px;color:var(--muted)}
+.day[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.day[aria-pressed="true"] .dw,.day[aria-pressed="true"] .dm{color:var(--on-accent)}
+.day:disabled{opacity:.4;cursor:not-allowed}
+.times{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.time{padding:10px 0;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-variant-numeric:tabular-nums;cursor:pointer}
+.time[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.time:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.empty{color:var(--muted);font-size:14px;margin:0}
+.field{display:flex;flex-direction:column;gap:4px}
+label{font-size:14px;font-weight:500}
+input,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+textarea{min-height:72px;resize:vertical}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.bar-in{max-width:560px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.sum{font-size:14px;color:var(--muted);min-width:0;flex:1 1 220px}
+.sum b{color:var(--ink);font-weight:500}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:500;border-radius:999px;padding:11px 18px;border:1px solid var(--accent);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.done{border:1px solid var(--ok);color:var(--ink);border-radius:12px;padding:14px;font-size:14px}
+.done b{color:var(--ok)}
+.contact{font-size:14px;color:var(--muted)}
+.contact span{color:var(--ink);font-variant-numeric:tabular-nums;user-select:all}
+@media (prefers-reduced-motion:no-preference){.svc,.day,.time,.btn{transition:background .15s,border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Reservá tu turno</span>
+    <h1 id="biz">Estudio Malva</h1>
+    <p class="lead" id="tagline">Uñas, pestañas y cejas · Palermo, CABA</p>
+    <p class="note">Datos de ejemplo: nombre, servicios, precios, horarios y WhatsApp se reemplazan por los de tu negocio.</p>
+  </header>
+
+  <section aria-labelledby="h-s">
+    <h2 id="h-s"><span class="n">1</span>Elegí el servicio</h2>
+    <div class="services" id="services"></div>
+  </section>
+
+  <section aria-labelledby="h-d">
+    <h2 id="h-d"><span class="n">2</span>Elegí el día</h2>
+    <div class="days" id="days"></div>
+  </section>
+
+  <section aria-labelledby="h-t">
+    <h2 id="h-t"><span class="n">3</span>Elegí el horario</h2>
+    <div class="times" id="times"></div>
+  </section>
+
+  <section aria-labelledby="h-f">
+    <h2 id="h-f"><span class="n">4</span>Tus datos</h2>
+    <form id="form" novalidate>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="field"><label for="name">Nombre y apellido</label><input id="name" autocomplete="name" placeholder="Ej: Sofía Pérez"></div>
+        <div class="field"><label for="note">Comentario (opcional)</label><textarea id="note" placeholder="Ej: quiero diseño francés, vengo con esmaltado anterior"></textarea></div>
+      </div>
+    </form>
+    <div id="done" class="done" hidden></div>
+    <p class="contact">¿Preferís escribir directo? WhatsApp: <span id="phoneTxt"></span></p>
+  </section>
+</div>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="sum" id="sum">Elegí servicio, día y horario.</div>
+    <div class="actions">
+      <button class="btn ghost" id="copy" type="button" aria-disabled="true">Copiar mensaje</button>
+      <a class="btn primary" id="wa" href="#" target="_blank" rel="noopener" aria-disabled="true">Pedir turno por WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Configuración del negocio (editar acá) =====
+const CONFIG = {
+  name: "Estudio Malva",
+  whatsapp: "5491100000000",          // formato internacional sin + ni espacios
+  slotStep: 30,                        // minutos entre horarios
+  daysAhead: 14,
+  // 0=domingo ... 6=sábado ; [apertura, cierre] en "HH:MM"; null = cerrado
+  hours: {0:null, 1:["10:00","19:00"], 2:["10:00","19:00"], 3:["10:00","19:00"], 4:["10:00","20:00"], 5:["10:00","20:00"], 6:["10:00","14:00"]},
+  services: [
+    {name:"Esmaltado semipermanente", min:60, price:14000},
+    {name:"Kapping gel + semi", min:90, price:19000},
+    {name:"Esculpidas", min:120, price:26000},
+    {name:"Lifting de pestañas", min:60, price:18000},
+    {name:"Perfilado de cejas", min:30, price:8000},
+  ]
+};
+// ===================================================
+
+const $ = id => document.getElementById(id);
+const fmtARS = n => "$" + n.toLocaleString("es-AR");
+const DW = ["dom","lun","mar","mié","jue","vie","sáb"];
+const MO = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const DWL = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const toMin = s => { const [h,m] = s.split(":").map(Number); return h*60+m; };
+const toHM = m => String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const state = { svc:null, day:null, time:null };
+
+$("biz").textContent = CONFIG.name;
+$("phoneTxt").textContent = "+" + CONFIG.whatsapp;
+
+function renderServices(){
+  const box = $("services"); box.textContent = "";
+  CONFIG.services.forEach((s,i)=>{
+    const b = document.createElement("button");
+    b.type="button"; b.className="svc"; b.setAttribute("aria-pressed", state.svc===i);
+    b.innerHTML = `<span class="name"></span><span class="price"></span><span class="meta"></span>`;
+    b.querySelector(".name").textContent = s.name;
+    b.querySelector(".price").textContent = fmtARS(s.price);
+    b.querySelector(".meta").textContent = s.min >= 60 ? `${Math.floor(s.min/60)} h${s.min%60?" "+s.min%60+" min":""}` : `${s.min} min`;
+    b.onclick = ()=>{ state.svc=i; state.time=null; renderAll(); };
+    box.appendChild(b);
+  });
+}
+
+function dayList(){
+  const out=[]; const t=new Date(); t.setHours(0,0,0,0);
+  for(let i=0;i<CONFIG.daysAhead;i++){ const d=new Date(t); d.setDate(t.getDate()+i); out.push(d); }
+  return out;
+}
+function slotsFor(d){
+  const h = CONFIG.hours[d.getDay()]; if(!h || state.svc===null) return [];
+  const dur = CONFIG.services[state.svc].min;
+  const open=toMin(h[0]), close=toMin(h[1]);
+  const now=new Date(); const isToday = d.toDateString()===now.toDateString();
+  const nowMin = now.getHours()*60+now.getMinutes()+60; // al menos 1 h de anticipación
+  const out=[];
+  for(let m=open; m+dur<=close; m+=CONFIG.slotStep) out.push({m, past: isToday && m<nowMin});
+  return out;
+}
+function renderDays(){
+  const box=$("days"); box.textContent="";
+  dayList().forEach(d=>{
+    const b=document.createElement("button"); b.type="button"; b.className="day";
+    const key=d.toDateString();
+    b.setAttribute("aria-pressed", state.day===key);
+    const closed=!CONFIG.hours[d.getDay()];
+    b.disabled = closed;
+    b.setAttribute("aria-label", `${DWL[d.getDay()]} ${d.getDate()} de ${MO[d.getMonth()]}${closed?", cerrado":""}`);
+    b.innerHTML=`<span class="dw">${DW[d.getDay()]}</span><span class="dn">${d.getDate()}</span><span class="dm">${closed?"cerrado":MO[d.getMonth()]}</span>`;
+    b.onclick=()=>{ state.day=key; state.time=null; renderAll(); };
+    box.appendChild(b);
+  });
+}
+function renderTimes(){
+  const box=$("times"); box.textContent="";
+  const p = document.createElement("p"); p.className="empty";
+  if(state.svc===null){ p.textContent="Primero elegí un servicio."; box.appendChild(p); return; }
+  if(!state.day){ p.textContent="Elegí un día para ver los horarios."; box.appendChild(p); return; }
+  const slots=slotsFor(new Date(state.day));
+  if(!slots.some(s=>!s.past)){ p.textContent="No quedan horarios este día. Probá con otro."; box.appendChild(p); return; }
+  slots.forEach(s=>{
+    const b=document.createElement("button"); b.type="button"; b.className="time";
+    b.textContent=toHM(s.m); b.disabled=s.past;
+    b.setAttribute("aria-pressed", state.time===s.m);
+    b.onclick=()=>{ state.time=s.m; renderAll(); };
+    box.appendChild(b);
+  });
+}
+function message(){
+  const s=CONFIG.services[state.svc]; const d=new Date(state.day);
+  const name=$("name").value.trim(); const note=$("note").value.trim();
+  let msg = `Hola ${CONFIG.name}! Quiero reservar un turno:\n`+
+    `• Servicio: ${s.name} (${fmtARS(s.price)})\n`+
+    `• Día: ${DWL[d.getDay()]} ${d.getDate()} de ${MO[d.getMonth()]}\n`+
+    `• Horario: ${toHM(state.time)} hs\n`+
+    `• Nombre: ${name}`;
+  if(note) msg += `\n• Comentario: ${note}`;
+  return msg + `\n¿Me confirmás si está disponible?`;
+}
+function ready(){ return state.svc!==null && state.day && state.time!==null && $("name").value.trim().length>1; }
+function renderBar(){
+  const sum=$("sum"); const ok=ready();
+  if(state.svc!==null && state.day && state.time!==null){
+    const s=CONFIG.services[state.svc]; const d=new Date(state.day);
+    sum.innerHTML=""; const b=document.createElement("b");
+    b.textContent=`${s.name} · ${DW[d.getDay()]} ${d.getDate()} ${MO[d.getMonth()]} · ${toHM(state.time)} hs`;
+    sum.appendChild(b);
+    if(!ok) sum.append(document.createElement("br"), "Completá tu nombre para enviar.");
+  } else sum.textContent="Elegí servicio, día y horario.";
+  const wa=$("wa"), cp=$("copy");
+  wa.setAttribute("aria-disabled", !ok); cp.setAttribute("aria-disabled", !ok);
+  wa.href = ok ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message())}` : "#";
+}
+function renderAll(){ renderServices(); renderDays(); renderTimes(); renderBar(); }
+
+$("name").addEventListener("input", renderBar);
+$("note").addEventListener("input", renderBar);
+$("form").addEventListener("submit", e=>e.preventDefault());
+$("wa").addEventListener("click", e=>{
+  if(!ready()){ e.preventDefault(); return; }
+  const done=$("done"); done.hidden=false;
+  done.innerHTML="<b>Casi listo.</b> Se abrió WhatsApp con tu pedido. Enviá el mensaje y te confirmamos el turno por ahí. Si no se abrió, tocá «Copiar mensaje» y mandalo al número de abajo.";
+});
+$("copy").addEventListener("click", async ()=>{
+  if(!ready()) return;
+  const txt=message(); const btn=$("copy");
+  try{ await navigator.clipboard.writeText(txt); btn.textContent="Copiado"; }
+  catch{ const ta=$("note"); const prev=ta.value; ta.value=txt; ta.select(); btn.textContent="Seleccionado: copialo"; setTimeout(()=>{ta.value=prev; renderBar();},4000); }
+  setTimeout(()=>btn.textContent="Copiar mensaje",2500);
+});
+
+// Estado inicial de ejemplo: primer servicio y primer día abierto preseleccionados
+state.svc=0;
+const firstOpen=dayList().find(d=>CONFIG.hours[d.getDay()] && slotsFor(d).some(s=>!s.past));
+if(firstOpen) state.day=firstOpen.toDateString();
+renderAll();
+</script>
+
+</body></html>
